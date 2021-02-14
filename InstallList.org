@@ -1,0 +1,380 @@
+# -------------------------------------------------------------------------
+#                  Author    : JPD
+#                  Time-stamp: "2021-02-14 16:38:14 jpdur"
+# -------------------------------------------------------------------------
+# #+TODO: TODO FEEDBACK VERIFY | CANCELED IMPOSSIBLE DONE
+#+property: header-args :results silent :tangle yes :comments both
+
+* Overview
+  Installation process for a broad set of tools/utilities
+  Objective: Being able to reinstall them fairly easily
+  All these files are actually spread throughout the C: Drive
+  Grouped via link into that directory in order to create a Git Repository
+
+* Main config Files
+In addition of being at the expected place for their respective program
+and who remembers where they actually are, they are linked to a %HOME%\.w10config directory
+https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/
+Example mklink /H c:\Users\jpdur\Emacs\.w10config\RefDEsktopFile.txt c:\Users\jpdur\Desktop\RefDesktopFile.Txt
+To be run from an elevated prompt
+cd  %HOME%\.w10config
+** Powershell config file
+mklink /H c:\Users\jpdur\Emacs\.w10config\Microsoft.Powershell_profile.ps1 c:\Users\jpdur\Documents\WindowsPowerShell\Microsoft.Powershell_profile.ps1
+** WT settings
+mklink /H c:\Users\jpdur\Emacs\.w10config\wtsettings.json C:\Users\jpdur\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+rem default colour scheme ... but mklink gets Access Denied // Used by others ????
+rem mklink /H c:\Users\jpdur\Emacs\.w10config\wtdefaults.json "C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.4.3243.0_x64__8wekyb3d8bbwe\defaults.json"
+*** CLI Examples
+Examples with different commands and tabs ==> Associated to clavier
+C:\Users\jpdur\AppData\Local\Microsoft\WindowsApps\wt.exe -p "Command Prompt" -d "f:\proto\server" make start; new-tab -p "Command Prompt" -d "f:\proto\client" make dev; new-tab -p "Windows PowerShell" -d "f:\proto" ; focus-tab -t 0
+C:\Users\jpdur\AppData\Local\Microsoft\WindowsApps\wt.exe -p "Command Prompt" -d "f:\proto\server" make start; new-tab -p "Command Prompt" -d "f:\proto\client" make dev; new-tab -p "Windows PowerShell" -d "f:\proto" ; new-tab -p "Ubuntu-20.04" ; focus-tab -t 0
+C:\Users\jpdur\AppData\Local\Microsoft\WindowsApps\wt.exe -p "Command Prompt" -d "f:\proto\server"; new-tab -p "Command Prompt" -d "f:\proto\client"; new-tab -p "Windows PowerShell" -d "f:\proto" ; new-tab -p "Ubuntu-20.04" ; focus-tab -t 0
+
+https://www.quantamagazine.org/the-epigenetic-secrets-behind-dopamine-drug-addiction-and-depression-20201027/?utm_source=pocket-newtab-global-en-GB?sso_success
+** Chocolatey log
+mklink /H c:\Users\jpdur\Emacs\.w10config\chocolatey.log C:\ProgramData\chocolatey\logs\chocolatey.log
+** Config.org
+Emacs configuration file 
+mklink /H c:\Users\jpdur\Emacs\.w10config\config.org C:\Users\jpdur\Emacs\.emacs.d\config.org
+   
+* Chocolatey
+** Install
+   Choco install -- Notes to be added
+** List Packages installed
+   choco list --localonly
+** Update Packages
+   check table below with list of commands
+   or check on chocolatey with the name of the installed version (portable ...)
+** List of chocolatey packages
+   |------------------------------------------+--------------------------------+-----------------------------------------------|
+   | List                                     | Upgrade Command                | Directory                                     |
+   |------------------------------------------+--------------------------------+-----------------------------------------------|
+   | 7zip 16.02                               |                                |                                               |
+   | 7zip.install 16.02                       |                                |                                               |
+   | autoruns 13.98.20200930                  |                                |                                               |
+   | chocolatey 0.10.11                       |                                |                                               |
+   | chocolatey-core.extension 1.3.3          |                                |                                               |
+   | chocolatey-windowsupdate.extension 1.0.4 |                                |                                               |
+   | dbatools 1.0.112                         |                                |                                               |
+   | dngrep 2.9.304.0                         | choco upgrade dngrep           |                                               |
+   | DotNet4.5.2 4.5.2.20140902               |                                |                                               |
+   | emacs 27.1.0.20200909                    |                                |                                               |
+   | git 2.18.0                               |                                |                                               |
+   | git.install 2.18.0                       |                                |                                               |
+   | gsudo 0.7.2                              |                                |                                               |
+   | KB2919355 1.0.20160915                   |                                |                                               |
+   | KB2919442 1.0.20160915                   |                                |                                               |
+   | KB2999226 1.0.20181019                   |                                |                                               |
+   | KB3033929 1.0.5                          |                                |                                               |
+   | KB3035131 1.0.3                          |                                |                                               |
+   | keepass-classic 1.39                     | choco upgrade keepass-classic  | C:\Program Files (x86)\KeePass Password Safe\ |
+   | make 4.3                                 |                                |                                               |
+   | microsoft-edge 81.0.416.72               |                                |                                               |
+   | microsoft-windows-terminal 0.11.1251.0   |                                |                                               |
+   | miktex 20.11.0.20201119                  |                                |                                               |
+   | miktex.install 20.11.0.20201119          |                                |                                               |
+   | mingw 8.1.0                              |                                |                                               |
+   | mongodb 4.0.4                            |                                |                                               |
+   | mongodb.install 4.0.4                    |                                |                                               |
+   | mouse-jiggler 1.8.27                     |                                |                                               |
+   | nodejs 14.2.0                            |                                |                                               |
+   | nodejs.install 14.2.0                    |                                |                                               |
+   | notepadplusplus 7.9.1                    |                                | C:\Program Files\Notepad++                    |
+   | notepadplusplus.install 7.9.1            |                                |                                               |
+   | Opera 38.0.2220.41                       |                                |                                               |
+   | pandoc 2.11.3.2                          |                                | C:\Users\jpdur\AppData\Local\Pandoc           |
+   | picpick.portable 5.1.4                   | choco upgrade picpick.portable |                                               |
+   | procexp 16.32                            | choco upgrade procexp          |                                               |
+   | psubst 3.0.1                             |                                |                                               |
+   | sqlite 3.34.1                            | choco install sqlite           |                                               |
+   | treesizefree 4.4.1.1                     |                                |                                               |
+   | ultrasearch 2.3.2                        |                                |                                               |
+   | vcredist140 14.25.28508.3                |                                |                                               |
+   | Wget 1.20.3.20190531                     |                                |                                               |
+   | zoom 5.0.24046.0510                      |                                |                                               |
+   |------------------------------------------+--------------------------------+-----------------------------------------------|
+
+
+* npm config
+** Command to get only the 1st level
+ npm list --depth=0 -g
+** Results
+|-------------------------+----------------------------------------------------|
+| Package                 | Coments                                            |
+|-------------------------+----------------------------------------------------|
+| @vue/cli@4.5.7          | Vue Package                                        |
+|-------------------------+----------------------------------------------------|
+| npm@6.14.10             | npm and npm related tools                          |
+| npm-check-updates@6.0.1 | probably all installed with npm                    |
+| pkg@4.4.8               |                                                    |
+|-------------------------+----------------------------------------------------|
+| vls@0.6.4               | Latest version @ Dec 29th 2020                     |
+|-------------------------+----------------------------------------------------|
+| generator-office@1.7.6  | Specific install for XL Addin JS                   |
+| yo@3.1.1                | npm install -g yo office                           |
+|-------------------------+----------------------------------------------------|
+| hicat@0.8.0             | Improved version of cat with forward backward page |
+|                         | Syntax highlight                                   |
+|-------------------------+----------------------------------------------------|
+
+* Emacs - Check Path to external exe
+** from * scratch *
+   ;; Added some reformatting
+   ;; This buffer is for text that is not saved, and for Lisp evaluation.
+   ;; To create a file, visit it with C-x C-f and enter text in its buffer.
+
+   (getenv "PATH")
+   "C:\\Program Files\\Microsoft MPI\\Bin\\;
+   C:\\ProgramData\\Oracle\\Java\\javapath;
+   C:\\WINDOWS\\system32;
+   C:\\WINDOWS;
+   C:\\WINDOWS\\System32\\Wbem;
+   C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;
+   C:\\Program Files (x86)\\Gow\\bin;
+   C:\\ProgramData\\chocolatey\\bin;
+   C:\\WINDOWS\\system32\\config\\systemprofile\\.dnx\\bin;
+   C:\\Program Files\\Microsoft DNX\\Dnvm\\;
+   C:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;
+   C:\\Program Files\\Git\\cmd;
+   C:\\WINDOWS\\System32\\OpenSSH\\;
+   C:\\Program Files\\Azure Data Studio\\bin;
+   C:\\Program Files (x86)\\Microsoft SQL Server\\140\\Tools\\Binn\\;
+   C:\\Program Files (x86)\\Microsoft SQL Server\\Client SDK\\ODBC\\130\\Tools\\Binn\\;
+   C:\\Program Files (x86)\\Microsoft SQL Server\\140\\DTS\\Binn\\;
+   C:\\Program Files (x86)\\Microsoft SQL Server\\140\\Tools\\Binn\\ManagementStudio\\;
+   C:\\Program Files\\nodejs\\;
+   C:\\Program Files\\Microsoft SQL Server\\140\\Tools\\Binn\\;
+   C:\\Program Files\\Microsoft SQL Server\\140\\DTS\\Binn\\;
+   C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\130\\Tools\\Binn\\;
+   C:\\Program Files\\dotnet\\;
+   C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;
+   C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;
+   C:\\ProgramData\\chocolatey\\lib\\gsudo\\bin\\;
+   C:\\Users\\jpdur\\AppData\\Local\\Microsoft\\WindowsApps;
+   C:\\Users\\jpdur\\AppData\\Local\\atom\\bin;
+   C:\\Program Files\\Azure Data Studio\\bin;
+   C:\\Users\\jpdur\\AppData\\Roaming\\npm;
+   C:\\Users\\jpdur\\AppData\\Local\\Microsoft\\WindowsApps;
+   C:\\ProgramData\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin;
+   C:\\Users\\jpdur\\.dotnet\\tools"
+
+
+* Windows Terminal
+  Default or installed via Chocolatey
+** Settings
+   modified in  %HOME%\.w10config\wtsettings.json
+   alt + settings give access to a series of default defaults.json file to pick up the
+   Colour Scheme already defined by default
+** Elevated Prompts
+   gsudo installed via chocolatey
+   Using gsudo it is possible to launch within WT a powershell elevated prompt M-S-3
+   Using gsudo it is possible to launch within WT a cmd        elevated prompt M-S-6
+
+
+* Powershell
+** Check elevated Prompt
+   cpe (check-prompt-elevation) or cep (Check Elevated Prompt) alias commands
+   as per the default Profile
+** Windows Terminal
+   Add powershell elevated prompt in config
+   powershell.exe -command "Start-Process powershell.exe -Verb RunAs"
+
+
+* Map directory to drive
+** Various standard methods
+   https://www.raymond.cc/blog/map-folder-or-directory-to-drive-letter-for-quick-and-easy-access/
+   This could be an option but sometimes issues when starting laptop
+   net use g: \\localhost\d$\fis /P:Yes
+** Preferred Method - requires psubst
+   rem https://github.com/ildar-shaimordanov/psubst
+   choco install psubst
+   rem psubst from an elevated prompt
+   psubst g: d:\fis /P
+   rem psubst from a standard prompt /PF forces the run as admin
+   rem psubst g: d:\fis /PF
+** List of defined drives
+   psubst gives the list of all drives
+   F:\: => d:\f2
+   G:\: => d:\fis
+
+* Use Chocolatey Versions
+** DONE procexp - Ctrl+Shift+Y
+   Initially installed in C:\Program Files (x86)\ProcessExplorer
+   #+CAPTION: ProcExp installations sanpshot
+   #+NAME: fig:./images/2021-01-24T081206.png
+   [[file:./images/2021-01-24T081206.png]]
+   Removed manually as now installed/used/updated via chocolatey
+   #+CAPTION: Snapshot from clavier
+   #+NAME: fig:./images/2021-01-24T080602.png
+   [[file:./images/2021-01-24T080602.png]]
+** TODO Emacs
+   Get rid of old versions
+   Old .emacs.d etc... ==> big cleanup
+** TODO PickPic
+** TODO Notepad++
+** TODO clavier+
+   
+
+   
+* Other Software
+  choco install dngrep
+  rem choco install notepadplusplus
+
+  rem version lite - failed
+  rem choco install xplorer2
+  rem choco install xplorer2pro
+
+  rem dexpot - failed
+  choco install dexpot
+
+  choco install classic-shell
+
+  rem failed - not recent enough W10 version
+  choco install microsoft-windows-terminal
+
+  choco install procexp
+
+  choco install clavier-plus.portable
+
+  rem tools
+  choco install git
+  rem unix like utilities ls, cat, grep etc...
+  choco install gow
+  rem check .... wget required is the latest version
+  rem rename wget as wgetold if version 1.11...
+  rem install latest 1.15+ normally 1.20
+  rem choco install wget
+  choco install make
+  choco install emacs
+  rem choco install psubst
+
+  rem gcc
+  choco install mingw
+
+  rem Desktop tools
+  choco install stardock-fences
+  choco install ultrasearch
+  rem Probably choco install keepass-classic (v 1.38)
+  choco install keepass
+  rem dropbox failed
+  choco install dropbox
+  rem TreeSize
+  choco install treesizefree
+
+  rem Adobe PDF Reader
+  choco install adobereader
+
+  ren manual
+  Apex SQL search
+
+  rem no shared drive
+  rem clavier issue cf clubic in users/xxx/AppData/Local/Clavier+
+  rem dexpot manual from web site
+
+  rem Install alternative browsers
+  choco install firefoxesr
+  choco install opera
+  choco install microsoft-edge
+
+  rem tools web
+  choco install postman
+
+  rem connectivity
+  choco install zoom
+
+  rem tools // nodejs + npm
+  choco install nodejs
+
+  misc powershell elevated command line to be able to execute scripts freely CLI + make
+  set-executionpolicy Unrestricted -Scope CurrentUser
+
+  rem Bypass prevents systematic checks from beimg done
+  rem set-executionpolicy Unrestricted -Scope LocalMachine
+  set-executionpolicy Bypass -Scope LocalMachine
+
+  rem set-executionpolicy Unrestricted -Scope UserPolicy
+  Get-ExecutionPolicy -List
+
+  rem update powershell to the latest version USEFUL ??? as it is v 5.1 ...
+  rem choco install powershell
+
+  rem Emacs prettier not needed
+  rem npm install -g prettier
+
+  rem ncu in order to update the packages
+  npm install -g npm-check-updates
+  rem in order to install pkg
+  npm install -g pkg
+
+  rem install vue-cli in order to start a vue project
+  npm install -g @vue/cli
+
+  rem in order to upgrade .... no issue
+  choco upgrade dngrep
+
+** PickPic
+   Image capture
+   choco install picpick.portable
+*** Key elements of setup
+    rem C:\Users\jpdur\Pictures\PickPic
+    rem Image %d-%m-%y %h-%m-%s
+
+    rem dbatools
+    choco install dbatools
+
+    rem from powershell prompt to install export-excel
+    rem Start by download and installing the module via the PowerShell Gallery by running
+    rem Install-Module ImportExcel -Scope CurrentUser
+    rem to check it is there +version
+    rem Get-Module -Name ImportExcel
+
+    rem mouse jiggler
+    choco install mouse-jiggler
+
+** MikTex
+*** Step 1
+   In order to be able to export org into PDF
+   Latex to PDF
+   choco install miktex
+   Reboot to activate the new PATH
+*** Step 2
+    If not systematic error message ...
+    *major issue: So far, no MiKTeX administrator has checked for updates in TeXstudio*
+    https://tex.stackexchange.com/questions/530420/how-to-get-rid-of-pdflatex-major-issue-so-far-no-miktex-administrator-has-che
+
+** gsudo
+   https://github.com/gerardog/gsudo
+   rem gsudo to start an elevated prompt used within WT setup to get elevatd prompt
+   choco install gsudo
+
+** Notepad++
+   Check that there is one installation one in ProgramFiles and One in chocolatey....
+   choco install notepadplusplus
+** DONE Citrix
+   CLOSED: [2021-01-10 Sun 10:26]
+   *Citrix Receiver* renamed as /Citrix Workspace app/
+   [[https://www.citrix.com/downloads/workspace-app/windows/workspace-app-for-windows-latest.html][Download Citrix]]
+   Could it be installed via chocolatey
+** WAITING Pandoc
+   choco install pandoc
+   reboot needed as the path has been modified
+   Problems to write output to F: G: drives ==> pandoc using a low level write file method
+   G:\ <==> D:\FIS\TestPPT
+   pandoc -s MANUAL.txt -o example29.docx                 => failed on G:\
+   pandoc -s MANUAL.txt -o D:\example29.docx              => worked from G:\
+   pandoc -s MANUAL.txt -o D:\FIS\TestPPT\example29.docx  => Failed !!!
+   D:\fis\TestPPT>pandoc -s MANUAL.txt -o example29.docx  => Failed too
+   pandoc.exe: example29.docx: openBinaryFile: permission denied (Permission denied)
+   PS D:\FIS\TestPPT> pandoc -s MANUAL.txt -o D:\FIS\TestPPT\example29.docx => Failed too
+   pandoc.exe: D:\FIS\TestPPT\example29.docx: openBinaryFile: permission denied (Permission denied)
+   
+* Other setup
+** Seconds
+   https://www.top-password.com/blog/show-seconds-in-windows-10-taskbar-clock/
+   Relies on regedit
+   
+* DONE USB Safely Remove
+  CLOSED: [2021-01-24 Sun 08:29]
+  Deactivate the USB Controller i.e. does not start on Windows startup
+  It delays the keyboard/mouse switching
+  

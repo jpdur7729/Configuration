@@ -1,0 +1,237 @@
+// To view the default settings, hold "alt" while clicking on the "Settings" button.
+// For documentation on these settings, see: https://aka.ms/terminal-documentation
+// Actual location is C:\Users\jpdur\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+
+{
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+
+  "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+
+  "profiles": [
+    {
+      // Make changes here to the cmd.exe profile
+      "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+      "name": "cmd",
+      "commandline": "cmd.exe",
+      "hidden": false
+    },
+    {
+      // Make changes here to the powershell.exe profile
+      "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+      "name": "Windows PowerShell",
+      "colorScheme": "Campbell Powershell",
+      "commandline": "powershell.exe",
+      "hidden": false
+    },
+    {
+      // Make changes here to the powershell.exe profile to start in f:\proto
+      // change of colour but keep the same icon
+      // New-Guid from PS prompt in order to generate a guid
+      "guid": "{aef01620-416e-4556-960e-fb67bdd9e61f}",
+      "name": "Powershell (elevated)",
+      "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
+      "colorScheme": "Solarized Light",
+			"commandline": "powershell.exe gsudo powershell.exe -nologo",
+			"startingDirectory": "f:/proto",
+      "hidden": false
+    },
+    {
+      "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+      "hidden": false,
+      "name": "Azure Cloud Shell",
+      "source": "Windows.Terminal.Azure"
+    },
+    {
+      "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
+      "hidden": false,
+      "name": "Ubuntu-20.04",
+      "source": "Windows.Terminal.Wsl"
+    },
+		{
+      // Make changes here to the cmd.exe profile to get it elevated
+      // New-Guid from PS prompt in order to generate a guid
+      "guid": "{e9f61440-7f59-4774-af20-f265f5fd8696}",
+      "name": "cmd (elevated)",
+			// Specific Colour Scheme
+      "colorScheme": "One Half Light",
+			// Default prompt ends with # .. to have a more usual prompt than the default
+      "commandline": "powershell.exe gsudo cmd.exe",
+			"startingDirectory": "C:/Users/jpdur/Desktop",
+      "hidden": false
+    }
+  ],
+
+  // Add custom color schemes to this array
+  "schemes": [ // A profile can override the following color scheme values:
+    //   - "foreground"
+    //   - "background"
+    //   - "cursorColor"
+    {
+      "name": "Solarized Light",
+      "foreground": "#657B83",
+      "background": "#FDF6E3",
+      "cursorColor": "#002B36",
+      "black": "#073642",
+      "red": "#DC322F",
+      "green": "#859900",
+      "yellow": "#B58900",
+      "blue": "#268BD2",
+      "purple": "#D33682",
+      "cyan": "#2AA198",
+      "white": "#EEE8D5",
+      "brightBlack": "#002B36",
+      "brightRed": "#CB4B16",
+      "brightGreen": "#586E75",
+      "brightYellow": "#657B83",
+      "brightBlue": "#839496",
+      "brightPurple": "#6C71C4",
+      "brightCyan": "#93A1A1",
+      "brightWhite": "#FDF6E3"
+    },
+    {
+      "name": "One Half Light",
+      "foreground": "#383A42",
+      "background": "#FAFAFA",
+      "cursorColor": "#4F525D",
+      "black": "#383A42",
+      "red": "#E45649",
+      "green": "#50A14F",
+      "yellow": "#C18301",
+      "blue": "#0184BC",
+      "purple": "#A626A4",
+      "cyan": "#0997B3",
+      "white": "#FAFAFA",
+      "brightBlack": "#4F525D",
+      "brightRed": "#DF6C75",
+      "brightGreen": "#98C379",
+      "brightYellow": "#E4C07A",
+      "brightBlue": "#61AFEF",
+      "brightPurple": "#C577DD",
+      "brightCyan": "#56B5C1",
+      "brightWhite": "#FFFFFF"
+    },
+    {
+      "name": "Campbell Powershell",
+      "foreground": "#CCCCCC",
+      "background": "#012456",
+      "cursorColor": "#FFFFFF",
+      "black": "#0C0C0C",
+      "red": "#C50F1F",
+      "green": "#13A10E",
+      "yellow": "#C19C00",
+      "blue": "#0037DA",
+      "purple": "#881798",
+      "cyan": "#3A96DD",
+      "white": "#CCCCCC",
+      "brightBlack": "#767676",
+      "brightRed": "#E74856",
+      "brightGreen": "#16C60C",
+      "brightYellow": "#F9F1A5",
+      "brightBlue": "#3B78FF",
+      "brightPurple": "#B4009E",
+      "brightCyan": "#61D6D6",
+      "brightWhite": "#F2F2F2"
+    }
+  ],
+
+  // ---------------------------------------------------------------------------------------
+  // NB: Alt+Settings in the menu to get the defaults.json as a reference for customisation
+  // ---------------------------------------------------------------------------------------
+  // Add any keybinding overrides to this array.
+  // To unbind a default keybinding, set the command to "unbound"
+  "keybindings": [
+    {
+      "command": {
+        "action": "newTab",
+        "index": 0
+      },
+      "keys": "alt+shift+1"
+    },
+    {
+      "command": {
+        "action": "newTab",
+        "index": 1
+      },
+      "keys": "alt+shift+2"
+    },
+    {
+      "command": {
+        "action": "newTab",
+        "index": 2
+      },
+      "keys": "alt+shift+3"
+    },
+      {
+      "command": {
+        "action": "newTab",
+        "index": 3
+      },
+      "keys": "alt+shift+4"
+    },
+    {
+      "command": {
+        "action": "newTab",
+        "index": 4
+      },
+      "keys": "alt+shift+5"
+    },
+    {
+      "command": {
+        "action": "newTab",
+        "index": 5
+      },
+      "keys": "alt+shift+6"
+    },
+      {
+      "command": "closeTab",
+      "keys": [
+        "ctrl+w"
+      ]
+    },
+    {
+      "command": {
+        "action": "switchToTab",
+        "index": 0
+      },
+      "keys": "ctrl+1"
+    },
+    {
+      "command": {
+        "action": "switchToTab",
+        "index": 1
+      },
+      "keys": "ctrl+2"
+    },
+    {
+      "command": {
+        "action": "switchToTab",
+        "index": 2
+      },
+      "keys": "ctrl+3"
+    },
+    {
+      "command": {
+        "action": "switchToTab",
+        "index": 3
+      },
+      "keys": "ctrl+4"
+    },
+     {
+      "command": {
+        "action": "switchToTab",
+        "index": 4
+      },
+      "keys": "ctrl+5"
+    },
+    {
+      "command": "duplicateTab",
+      "keys": "ctrl+shift+d"
+    },
+    {
+      "command": "closeWindow",
+      "keys": [
+        "alt+f4"
+      ]
+    }
+  ]
+}
