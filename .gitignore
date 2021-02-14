@@ -1,0 +1,11 @@
+# ------------------------------------------------------------------------------
+#                     Author    : F2 - JPD
+#                     Time-stamp: "2021-02-14 16:59:23 jpdur"
+# ------------------------------------------------------------------------------
+
+# Files which are not be exported - used to build readme.md
+readme.org
+makefile 
+
+# All log files
+*.log
