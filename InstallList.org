@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------
 #                  Author    : JPD
-#                  Time-stamp: "2021-02-14 16:38:14 jpdur"
+#                  Time-stamp: "2021-02-25 12:03:11 jpdur"
 # -------------------------------------------------------------------------
 # #+TODO: TODO FEEDBACK VERIFY | CANCELED IMPOSSIBLE DONE
 #+property: header-args :results silent :tangle yes :comments both
@@ -12,31 +12,35 @@
   Grouped via link into that directory in order to create a Git Repository
 
 * Main config Files
+** Repo
+All is saved on GitHub
+** Key files
 In addition of being at the expected place for their respective program
 and who remembers where they actually are, they are linked to a %HOME%\.w10config directory
 https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/
 Example mklink /H c:\Users\jpdur\Emacs\.w10config\RefDEsktopFile.txt c:\Users\jpdur\Desktop\RefDesktopFile.Txt
 To be run from an elevated prompt
 cd  %HOME%\.w10config
-** Powershell config file
+*** Powershell config file
 mklink /H c:\Users\jpdur\Emacs\.w10config\Microsoft.Powershell_profile.ps1 c:\Users\jpdur\Documents\WindowsPowerShell\Microsoft.Powershell_profile.ps1
-** WT settings
+*** WT settings
 mklink /H c:\Users\jpdur\Emacs\.w10config\wtsettings.json C:\Users\jpdur\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 rem default colour scheme ... but mklink gets Access Denied // Used by others ????
 rem mklink /H c:\Users\jpdur\Emacs\.w10config\wtdefaults.json "C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.4.3243.0_x64__8wekyb3d8bbwe\defaults.json"
-*** CLI Examples
+**** CLI Examples
 Examples with different commands and tabs ==> Associated to clavier
 C:\Users\jpdur\AppData\Local\Microsoft\WindowsApps\wt.exe -p "Command Prompt" -d "f:\proto\server" make start; new-tab -p "Command Prompt" -d "f:\proto\client" make dev; new-tab -p "Windows PowerShell" -d "f:\proto" ; focus-tab -t 0
 C:\Users\jpdur\AppData\Local\Microsoft\WindowsApps\wt.exe -p "Command Prompt" -d "f:\proto\server" make start; new-tab -p "Command Prompt" -d "f:\proto\client" make dev; new-tab -p "Windows PowerShell" -d "f:\proto" ; new-tab -p "Ubuntu-20.04" ; focus-tab -t 0
 C:\Users\jpdur\AppData\Local\Microsoft\WindowsApps\wt.exe -p "Command Prompt" -d "f:\proto\server"; new-tab -p "Command Prompt" -d "f:\proto\client"; new-tab -p "Windows PowerShell" -d "f:\proto" ; new-tab -p "Ubuntu-20.04" ; focus-tab -t 0
 
 https://www.quantamagazine.org/the-epigenetic-secrets-behind-dopamine-drug-addiction-and-depression-20201027/?utm_source=pocket-newtab-global-en-GB?sso_success
-** Chocolatey log
+*** Chocolatey log
 mklink /H c:\Users\jpdur\Emacs\.w10config\chocolatey.log C:\ProgramData\chocolatey\logs\chocolatey.log
-** Config.org
+*** Config.org
 Emacs configuration file 
 mklink /H c:\Users\jpdur\Emacs\.w10config\config.org C:\Users\jpdur\Emacs\.emacs.d\config.org
-   
+
+
 * Chocolatey
 ** Install
    Choco install -- Notes to be added
@@ -60,7 +64,7 @@ mklink /H c:\Users\jpdur\Emacs\.w10config\config.org C:\Users\jpdur\Emacs\.emacs
    | DotNet4.5.2 4.5.2.20140902               |                                |                                               |
    | emacs 27.1.0.20200909                    |                                |                                               |
    | git 2.18.0                               |                                |                                               |
-   | git.install 2.18.0                       |                                |                                               |
+   | git.install 2.18.0                       | choco install git.install      |                                               |
    | gsudo 0.7.2                              |                                |                                               |
    | KB2919355 1.0.20160915                   |                                |                                               |
    | KB2919442 1.0.20160915                   |                                |                                               |
@@ -74,8 +78,8 @@ mklink /H c:\Users\jpdur\Emacs\.w10config\config.org C:\Users\jpdur\Emacs\.emacs
    | miktex 20.11.0.20201119                  |                                |                                               |
    | miktex.install 20.11.0.20201119          |                                |                                               |
    | mingw 8.1.0                              |                                |                                               |
-   | mongodb 4.0.4                            |                                |                                               |
-   | mongodb.install 4.0.4                    |                                |                                               |
+   | mongodb 4.0.4                            |                                | Not used                                      |
+   | mongodb.install 4.0.4                    |                                | Not used                                      |
    | mouse-jiggler 1.8.27                     |                                |                                               |
    | nodejs 14.2.0                            |                                |                                               |
    | nodejs.install 14.2.0                    |                                |                                               |
@@ -86,14 +90,26 @@ mklink /H c:\Users\jpdur\Emacs\.w10config\config.org C:\Users\jpdur\Emacs\.emacs
    | picpick.portable 5.1.4                   | choco upgrade picpick.portable |                                               |
    | procexp 16.32                            | choco upgrade procexp          |                                               |
    | psubst 3.0.1                             |                                |                                               |
+   | sendtokindle v1.1.1.250                  | choco install sendtokindle     | Easiest way to semd PDF to kindle             |
    | sqlite 3.34.1                            | choco install sqlite           |                                               |
-   | treesizefree 4.4.1.1                     |                                |                                               |
+   | treesizefree 4.4.1.1                     |                                | Still useful ???                              |
    | ultrasearch 2.3.2                        |                                |                                               |
    | vcredist140 14.25.28508.3                |                                |                                               |
    | Wget 1.20.3.20190531                     |                                |                                               |
    | zoom 5.0.24046.0510                      |                                |                                               |
    |------------------------------------------+--------------------------------+-----------------------------------------------|
-
+** Potentially installed by chocolatey
+*** Git Support
+**** Current
+https://phoenixnap.com/kb/how-to-install-git-windows
+https://git-scm.com/downloads
+choco install git.install
+**** New ??
+Not so sure as it seems to be a brand new version  
+choco install github-desktop
+**** Powershell extension
+Usefulness for me 
+https://chocolatey.org/packages/microsoft-powershellforgithub-psmodule
 
 * npm config
 ** Command to get only the 1st level
@@ -179,7 +195,13 @@ mklink /H c:\Users\jpdur\Emacs\.w10config\config.org C:\Users\jpdur\Emacs\.emacs
    Add powershell elevated prompt in config
    powershell.exe -command "Start-Process powershell.exe -Verb RunAs"
 
+   
 
+* TODO Desinstall
+  1) Evernote as never used
+  3) Mongo DB
+  4) Others ???
+   
 * Map directory to drive
 ** Various standard methods
    https://www.raymond.cc/blog/map-folder-or-directory-to-drive-letter-for-quick-and-easy-access/
@@ -377,4 +399,13 @@ mklink /H c:\Users\jpdur\Emacs\.w10config\config.org C:\Users\jpdur\Emacs\.emacs
   CLOSED: [2021-01-24 Sun 08:29]
   Deactivate the USB Controller i.e. does not start on Windows startup
   It delays the keyboard/mouse switching
+  Where is it located ??? - To be used sometimes
+  
+
+
+  
+* Sylvia
+** Homebrew installation
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-homebrew-on-macos
+
   

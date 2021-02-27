@@ -9,3 +9,6 @@ makefile
 
 # All log files
 *.log
+
+# All images
+*.png
