@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------
 #                  Author    : JPD
-#                  Time-stamp: "2021-02-27 16:49:58 jpdur"
+#                  Time-stamp: "2021-03-20 09:49:40 jpdur"
 # -------------------------------------------------------------------------
 # #+TODO: TODO FEEDBACK VERIFY | CANCELED IMPOSSIBLE DONE
 #+property: header-args :results silent :tangle yes :comments both
@@ -22,11 +22,13 @@ Do *not* use ~elisp~ as the language for source blocks. Instead, use ~emacs-lisp
 ** ESC - fullscreen
 Not quite sure how escape works and what it is bound to but
 ESC maximises the buffer and F9-left (from winner-mode) restores the previous setup
-of windows ==> quite handy 
+of windows ==> quite handy
+C-g to quit a command 
 ** TODO require vs. use-package
 It is  necessary ? Can we get rid of ot ?
 Important use-package needs to be installed
 https://www.reddit.com/r/emacs/comments/643dkt/use_package_vs_require_and_maybe_some_sorrowful/
+Using straight ???? --> a possible simple option
 ** Useless
 *** package-selected-packages
 in .emacs ==> what to do ? vue-mode ???
@@ -112,6 +114,10 @@ Cycle forwards through input history.
 
 
 * Standard Configuration
+** Theme
+#+begin_src emacs-lisp
+  (load-theme 'leuven t)
+#+end_src
 ** FullScreen
 To control whether or not it is maximized. By default bound to F11
 On w10 C-Win-Up/Down to maximize/minimize any windows
@@ -212,16 +218,26 @@ time-stamp is part of standard Emacs
   (add-hook 'before-save-hook 'time-stamp)
 #+end_src
 ** Overwrite cursor
-Change color of cursor when switching to Overwrite mode
+Change color of _cursor_ and form when switching to Overwrite mode
+The change is obviously buffer specific
 Inspired from
 https://emacs.stackexchange.com/questions/54166/cursor-color-depending-on-insert-or-overwrite-mode
-#+begin_src emacs-lisp
-  (defun toggle-cursor-color ()
-    (if (equal "deep pink" (face-background 'cursor))
-        (set-cursor-color "black")
-      (set-cursor-color "deep pink")))
+https://emacs.stackexchange.com/questions/27495/how-do-i-change-the-cursor-face-per-buffer
+https://stackoverflow.com/questions/10088168/how-to-check-whether-a-minor-mode-e-g-flymake-mode-is-on
 
-  (add-hook 'overwrite-mode-hook 'toggle-cursor-color)
+#+begin_src emacs-lisp
+  ;; Make the change buffer-specific
+  (add-hook 'post-command-hook 'my-cursor-change)
+
+  ;; Green Box vs. Pink Bar for Insert/Overwrite respectively
+  (defun my-cursor-change ()
+    (progn
+      (set-cursor-color (if (bound-and-true-p overwrite-mode) "deep pink" "medium sea green"))
+      (if (bound-and-true-p overwrite-mode)
+          (setq cursor-type 'bar)
+        (setq cursor-type 'box))
+      )
+    )
 #+end_src
 ** paren mode
 Highlight the corresponding pair of ( [ or {
@@ -309,10 +325,12 @@ M-b   helm buffers list = helm with incremental search ...
   (global-set-key [(meta b)] 'helm-buffers-list)
   (brief-key (kbd "C-M-b")   'brief-buf-list)
 
+  ;; Default is 20 
+  (setq helm-buffer-max-length 40)
+
   ;; By default M-n is next buffer
   ;; M-p is now associated to previous buffer
   (brief-key  [(meta p)]  'brief-previous-buffer)
-
 #+end_src
 ** Keyboard Shortcuts
 Various keybord shortcuts
@@ -410,6 +428,7 @@ To be tested and configured based on examples
 I use a general inbox file to collect all new tasks on the run and will batch-schedule/refile them a couple times a day.
 
 Inbox and mobile inbox co-exist to prevent sync conflicts when adding tasks while having no internet connection. This works pretty well and I treat them equally in the agenda views.
+
 ** Key Bindings for org 
 #+begin_src emacs-lisp
   (define-key global-map "\C-ca" 'org-agenda)
@@ -805,8 +824,8 @@ And add a new marker # ==> seems to be the main difficulty
 https://emacs.stackexchange.com/questions/35626/how-to-make-my-own-org-mode-text-emphasis-work-again/35632#35632
 for org only ==> probably won't export to PDF with the customisation
 Examples
-*Test*   /Test/   =Test=   ~Test~   +Test+   #Test#
- *       /      =      -      +       #
+*Test*   /Test/   =Test=  ~Test~   +Test+   #Test#  _Test_
+ *       /      =     ~      +       #      _
 #+begin_src emacs-lisp
   (setq org-hide-emphasis-markers t)                            
   (setq org-emphasis-alist   
@@ -839,7 +858,7 @@ using C-u C-c C-o will open the url using eww
 
      (define-key org-mode-map (kbd "C-c C-o") #'my-org-open-at-point)
    #+end_src
-** Ellipsis
+** TODO Ellipsis
 Is not displayed correctly between sessions
 S-Tab does not work as well as usual
 https://endlessparentheses.com/changing-the-org-mode-ellipsis.html
@@ -943,6 +962,26 @@ Read documentation and test
   (require 'helm-projectile)
   (helm-projectile-on)
 #+end_src
+*** TODO Force Refresh Cache for files
+;; https://emacs.stackexchange.com/questions/12843/how-to-clear-cache-of-projectile-file-in-spacemacs
+Force Refresh the cache when leaving/starting a project with Projectile
+#+begin_src emacs-lisp
+  ;; (add-hook 'projectile-after-switch-project-hook (lambda ()
+  ;;       (projectile-invalidate-cache nil)))
+
+  ;; (add-hook 'after-init-hook (lambda ()
+  ;;     (mapc (lambda (project-root)
+  ;;         (remhash project-root projectile-project-type-cache)
+  ;;         (remhash project-root projectile-projects-cache)
+  ;;         (remhash project-root projectile-projects-cache-time)
+  ;;         (when projectile-verbose
+  ;;             (message "Invalidated Projectile cache for %s."
+  ;;                 (propertize project-root 'face 'font-lock-keyword-face)))
+  ;;         (when (fboundp 'recentf-cleanup)
+  ;;             (recentf-cleanup)))
+  ;;         (projectile-hash-keys projectile-projects-cache))
+  ;;     (projectile-serialize-cache)))
+#+end_src
 ** sunshine
 Get the weather forecast
 [[https://github.com/aaronbieber/sunshine.el/blob/master/README.md][Sunshine Readme]]
@@ -979,8 +1018,31 @@ A list of different options
   (defalias 'redo 'undo-tree-redo)
   (global-set-key (kbd "M-*") 'redo)
 #+end_src
+** TODO SQL Format
+sql-indent discarded
+sqlformat using a CLI exe such as sqlformat
+Download link to be found http://architectshack.com/PoorMansTSqlFormatter.ashx#Download_15
+Check that sqlformatter is in the path
+Found the right parameters to sqlformatter
+PB with the timestamp update 
+#+begin_src emacs-lisp
+  ;;   (require 'sqlformat)
+  ;;   (setq sqlformat-command 'sqlformatter)
+  ;;   ;; (setq sqlformat-command 'sqlformatter)
 
+  ;;   ;; To refornat all SQL when saving - do not update timestamp 
+  ;;   ;; (add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
+
+  ;; ``;; Test to call directly the external program cf. insert .png images
+  ;;   ;; (shell-command-to-string (concat "Powershell ImageinClipboard2File -Dest " filename " "))
+
+  ;;   ;; To have a key shortcut to format accordingly
+  ;;   ;; sql-mode-mqp ??? To be checked
+  ;;   (define-key sql-mode-map (kbd "C-c C-f") 'sqlformat)
+#+end_src
    
+
+
 * Misc
 ** Escape
 Modified version with rationale inlinkh to have a working Escape on w10
@@ -1213,3 +1275,5 @@ If missing --> No new pdf can be opened
 #+begin_src emacs-lisp
   (pdf-tools-install :no-query)
 #+end_src
+
+

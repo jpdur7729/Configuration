@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------
 #                  Author    : JPD
-#                  Time-stamp: "2021-02-25 12:03:11 jpdur"
+#                  Time-stamp: "2021-03-23 08:00:38 jpdur"
 # -------------------------------------------------------------------------
 # #+TODO: TODO FEEDBACK VERIFY | CANCELED IMPOSSIBLE DONE
 #+property: header-args :results silent :tangle yes :comments both
@@ -39,6 +39,24 @@ mklink /H c:\Users\jpdur\Emacs\.w10config\chocolatey.log C:\ProgramData\chocolat
 *** Config.org
 Emacs configuration file 
 mklink /H c:\Users\jpdur\Emacs\.w10config\config.org C:\Users\jpdur\Emacs\.emacs.d\config.org
+
+
+* Update Windows
+For some Windows updates ==> a few usual issues
+** Mapped Drives
+*** Documentation
+https://github.com/ildar-shaimordanov/psubst
+psubst or psubst /P based on registry ==> registry cleanup up by upgrade 
+from an elevated prompt (/PF gives an incorrect error message)
+*** Steps - from elevated prompt
+psubst f: d:\f2 /P
+psubst g: d:\fis /P
+Then reboot 
+** Classic Menu
+Upgrade blocked by control - just an annoying message at startup
+*** Step - from elevated prompt
+in directory C:\Program Files\Classic Shell
+ClassicStartMenu -upgrade
 
 
 * Chocolatey
@@ -389,6 +407,10 @@ https://chocolatey.org/packages/microsoft-powershellforgithub-psmodule
    pandoc.exe: example29.docx: openBinaryFile: permission denied (Permission denied)
    PS D:\FIS\TestPPT> pandoc -s MANUAL.txt -o D:\FIS\TestPPT\example29.docx => Failed too
    pandoc.exe: D:\FIS\TestPPT\example29.docx: openBinaryFile: permission denied (Permission denied)
+** SQLFormatter
+Download link to be found http://architectshack.com/PoorMansTSqlFormatter.ashx#Download_15
+Manual Install + Unpack
+Copied exe into PATH directory C:\ProgramData\chocolatey\bin
    
 * Other setup
 ** Seconds
