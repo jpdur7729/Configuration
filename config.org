@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------
 #                  Author    : JPD
-#                  Time-stamp: "2021-03-20 09:49:40 jpdur"
+#                  Time-stamp: "2021-04-25 10:32:37 jpdur"
 # -------------------------------------------------------------------------
 # #+TODO: TODO FEEDBACK VERIFY | CANCELED IMPOSSIBLE DONE
 #+property: header-args :results silent :tangle yes :comments both
@@ -319,19 +319,31 @@ Adapted from the old brief version to position current line in view
   (brief-key (kbd "C-c c C-c")      'brief-center-line)
 #+end_src
 *** List of Buffers
-C-M-b brief buffer list = Standard emacs list of buffers
+Based on the default bs package
+Wrapped into a brief function to display always the list of buffers
+with the ad-hoc configuration --> inspired from old brief config and simplified
+2021-03-26 ??? - Is it still needed as helm is now used 99% of the time
+#+begin_src emacs-lisp
+  (require 'bs)
+  (defun brief-buf-list ()
+    "Zeigt die aktuelle Bufferliste an."
+    (interactive)
+    (bs--show-with-configuration (bs--configuration-name-for-prefix-arg "all"))
+    )
+#+end_src
+=Deprecated= C-M-b brief buffer list = Standard emacs list of buffers
+*Replaced*   C-M-b points to the list of bookmars same as C-x j l (JPD defined) C-x r l (Standard) 
 M-b   helm buffers list = helm with incremental search ...
 #+begin_src emacs-lisp
   (global-set-key [(meta b)] 'helm-buffers-list)
-  (brief-key (kbd "C-M-b")   'brief-buf-list)
-
-  ;; Default is 20 
-  (setq helm-buffer-max-length 40)
+  ;; (brief-key (kbd "C-M-b")   'brief-buf-list)
+  (global-set-key (kbd "C-M-b") 'list-bookmarks)
 
   ;; By default M-n is next buffer
   ;; M-p is now associated to previous buffer
   (brief-key  [(meta p)]  'brief-previous-buffer)
 #+end_src
+
 ** Keyboard Shortcuts
 Various keybord shortcuts
 #+begin_src emacs-lisp
@@ -349,13 +361,52 @@ Various keybord shortcuts
   ;; Start selecting also associated to M-a in addition to M-m
   (brief-key [(meta a)] 'cua-set-mark)
 #+end_src
+** Bookmarks
+Adapation of brief bookmarks
+M-j works to define them but the M-0 to recall them does not (trapped at system level to change desktop
+C-x rb / C-x rl standard list of bookmarks works -- quick remapping 
+#+begin_src emacs-lisp
+  (defun bookmark-jump-1 () (interactive) (bookmark-jump "1")  )
+  (defun bookmark-jump-2 () (interactive) (bookmark-jump "2")  )
+  (defun bookmark-jump-3 () (interactive) (bookmark-jump "3")  )
+  (defun bookmark-jump-4 () (interactive) (bookmark-jump "4")  )
+  (defun bookmark-jump-5 () (interactive) (bookmark-jump "5")  )
+  (defun bookmark-jump-6 () (interactive) (bookmark-jump "6")  )
+  (defun bookmark-jump-7 () (interactive) (bookmark-jump "7")  )
+  (defun bookmark-jump-8 () (interactive) (bookmark-jump "8")  )
+  (defun bookmark-jump-9 () (interactive) (bookmark-jump "9")  )
+  (defun bookmark-jump-0 () (interactive) (bookmark-jump "0")  )
 
+  (brief-key (kbd "C-x j 1")              'bookmark-jump-1 )
+  (brief-key (kbd "C-x j 2")              'bookmark-jump-2 )
+  (brief-key (kbd "C-x j 3")              'bookmark-jump-3 )
+  (brief-key (kbd "C-x j 4")              'bookmark-jump-4 )
+  (brief-key (kbd "C-x j 5")              'bookmark-jump-5 )
+  (brief-key (kbd "C-x j 6")              'bookmark-jump-6 )
+  (brief-key (kbd "C-x j 7")              'bookmark-jump-7 )
+  (brief-key (kbd "C-x j 8")              'bookmark-jump-8 )
+  (brief-key (kbd "C-x j 9")              'bookmark-jump-9 )
+  (brief-key (kbd "C-x j 0")              'bookmark-jump-0 )
+
+  ;; Quick jump to dashboard or special lists/files
+  (defun bookmark-jump-scratch   () (interactive) (switch-to-buffer "*scratch*")  )
+  (defun bookmark-jump-dashboard () (interactive) (switch-to-buffer "*dashboard*")  )
+  (brief-key (kbd "C-x j d")              'bookmark-jump-dashboard)
+  (brief-key (kbd "C-x j s")              'bookmark-jump-scratch)
+  (brief-key (kbd "C-x j l")              'list-bookmarks)
+
+  ;; Force the creation of the list of bokkmarks - if not it does not work 
+  (bookmark-bmenu-list)
+#+end_src
 
 
 
 * Configuration Standard packages
-** DONE winner-mode
-CLOSED: [2021-01-09 Sat 10:23]
+** path for specific packages
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/elpa/diredp")
+#+end_src
+** winner-mode
 Restore frame setup as per video
 [[https://www.youtube.com/watch?v=T_voB16QxW0][Video demo winner-mode 3 mns]]
 [[https://www.emacswiki.org/emacs/WinnerMode][EmacsWiki]]
@@ -374,18 +425,85 @@ winner-undo and winner-redo to be associated to F9-left and F9-right accordingly
 List of dired extensions
 https://github.com/Fuco1/dired-hacks#dired-hacks-utils
 *** dired
+standard dired options
 #+begin_src emacs-lisp
-  (require 'dired)
+  ;; Directories first
+  (setq ls-lisp-dirs-first t)
+
+  ;; use ISO dates (the first is for recent dates, second for old dates)
+  (setq ls-lisp-format-time-list '("%Y-%m-%d %H:%M" "%Y-%m-%d %H:%M"))
+  (setq ls-lisp-use-localized-time-format t)
+#+end_src
+*** dired-plus
+dired-plus also requires dired ==> really useful ?
+Idea is to use dired-rainbow to color the files
+with diredp I am currently losing very little on the mode-line and clean presentation 
+S-9 in dired and diredp to see all the details
+M-RET to open the file in the native app via w32-browser (windows specific)
+#+begin_src emacs-lisp
+  ;; (require 'dired+)
+
+  ;; no wrapping of the cursor
+  ;; (setq diredp-wrap-around-flag nil)
+  ;; Reuse dired buffer - prevents multiplication of buffers
+  ;; (diredp-toggle-find-file-reuse-dir 1)
+
+  ;; By default M-b set to bookmark - actually for consistency display helm-buffers-list
+  ;; (define-key dired-mode-map "\M-b"    'helm-buffers-list)
+  (define-key dired-mode-map [(meta b)] 'helm-buffers-list)
+
+  (require 'w32-browser)
+  ;; M-Ret redefined as it felt like it was only diredp 
+  ;; Enables M-Ret by default in order to see the file in its original app
+  ;; Similar shortcut to be defined for M-enter
+  (define-key dired-mode-map [(meta enter)]   'dired-w32-browser-reuse-dir-buffer)
+  (define-key dired-mode-map [(meta return)]  'dired-w32-browser-reuse-dir-buffer)
+
+  ;; ;; In order to be able to see image preview in tooltip-mode is to be activated
+  ;; (tooltip-mode 1)
+  ;; (require 'image-dired)
 #+end_src
 *** dired-open
 In order to be able to configure the
 - dired-open-extensions-elisp - call an elisp function based on extension
   #+begin_src emacs-lisp
-    (require 'dired-open)
+   (require 'dired-open)
   #+end_src
+*** dired-filetype-face
+package to color the file name  based on type i.e. extension
+equivalent dired-rainbow which does NOT seem to work 
+#+begin_src emacs-lisp
+  ;; For each filetype defined a colour scheme
+  (require 'dired-filetype-face)
+
+  ;; Plain vanilla blue for powershell scripts 
+  (deffiletype-face "powershell" "blue" "powershell")
+  ;; Create a group and a face for powershell related scripts
+  (deffiletype-face-regexp powershell
+    :type-for-docstring powershell
+    :extensions
+    '(
+      "ps1"
+      "psm1"))
+  ;; Associate the list of extension and the face
+  (deffiletype-setup "powershell" "powershell")
+
+#+end_src
+
 ** Powershell
+Shell and Powershell relies on shell-mode-map for some common behaviours
+In order to have M-n M-p to behave consistently through all types of buffer
+these keys are remapped as defined below. 2021-03-26
+https://www.reddit.com/r/emacs/comments/f7hkl3/clear_screen_in_emacs_shell/
 #+begin_src emacs-lisp
   (require 'powershell)
+
+  ;; to clear the contents of the buffer equivalent to old cls
+  (define-key shell-mode-map (kbd "C-c l s") 'comint-clear-buffer)
+
+  ;; next/previous buffer mapping
+  (define-key shell-mode-map (kbd "M-p") 'brief-next-buffer)
+  (define-key shell-mode-map (kbd "M-n") 'brief-previous-buffer)
 #+end_src
 ** hs-minor-mode
 Activate by default this mode
@@ -402,18 +520,6 @@ Mix of the default answer and he emacs >24 obervation ==> hs is activated for al
   (define-key hs-minor-mode-map (kbd "C-c @ h") 'hs-hide-block)
   (define-key hs-minor-mode-map (kbd "C-c @ s") 'hs-show-block)
 
-#+end_src
-** List of Buffers
-Based on the default bs package
-Wrapped into a brief function to display always the list of buffers
-with the ad-hoc configuration --> inspired from old brief config and simplified
-#+begin_src emacs-lisp
-  (require 'bs)
-  (defun brief-buf-list ()
-    "Zeigt die aktuelle Bufferliste an."
-    (interactive)
-    (bs--show-with-configuration (bs--configuration-name-for-prefix-arg "all"))
-    )
 #+end_src
 ** telephone-line
 To be tested and configured based on examples
@@ -643,6 +749,8 @@ From C-h v org-latex-caption-above
   ;; an alternative easier and quicker than C-c C-e
   ;; than lp + keeps the latex file for refs
   (define-key org-mode-map [(control f11)] 'org-latex-export-to-pdf)
+  ;; relies on ox-pandoc added in the C-c C-e list of exports options
+  (define-key org-mode-map [(control f12)] 'org-pandoc-export-to-docx)
 #+end_src
 *** Closed Time when done
 [[https://orgmode.org/manual/Closing-items.html][DONE time and/or note]]
@@ -734,7 +842,7 @@ All is proprly aligned as a result of using org-startup-indented t as per the De
     (let ((filename (my/take-screenshot)))
       (insert
        ;; (concat "[[file:" filename "]]")
-       (concat "#+CAPTION: " filename "\n" "#+ATTR_ORG: :width 900" "\n" "#+NAME: fig:" filename "\n" "[[file:" filename "]]")
+       (concat "#+ATTR_ORG: :width 900" "\n" "#+NAME: fig:" filename "\n" "#+CAPTION: " filename "\n" "[[file:" filename "]]")
        )))
 
   ;; Associate to C-c i m to get it in the org buffer
@@ -813,6 +921,8 @@ https://emacs.stackexchange.com/questions/40571/how-to-set-a-short-cut-for-begin
 #+begin_src emacs-lisp
   (add-to-list 'org-structure-template-alist '("L" . "src emacs-lisp
   "))
+  (add-to-list 'org-structure-template-alist '("P" . "src powershell
+  "))
   (add-to-list 'org-structure-template-alist '("S" . "src sqlite
   "))
 #+end_src
@@ -880,13 +990,30 @@ https://www.reddit.com/r/emacs/comments/a0kufc/orgmode_summing_column_grouped_by
 https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-sqlite.html
 Install via chocolatey sqlite ==> sqlite3 is thus installed
 Configure babel so that sqlite becomes a possible language
+*** Powershell
+Add the unmaintained ob-powershell.el ==> But it works
+https://www.reddit.com/r/emacs/comments/dkz0n1/babel_with_powershell
+ob-powershell was manually copied into the ~\.emacs.d\elpa\org-9.4.2 directory
+#+begin_src emacs-lisp
+(require 'ob-powershell)
+#+end_src
 *** Configuration
 #+begin_src emacs-lisp
   (org-babel-do-load-languages
    'org-babel-load-languages (quote ((emacs-lisp . t)
                                      (sqlite . t)
+                                     (powershell . t)
                                      )))
 #+end_src
+** WYSIWYG entry 
+https://www.reddit.com/r/orgmode/comments/mmv4cs/help_making_orgmode_linewrap_behave_like_wysiwyg/
+Does that work ? Not sure. To be retestes C-c tl to wrap line or not seems to be key
+Lines vs table behavious
+# #+begin_src emacs-lisp
+# (add-hook 'org-mode-hook 'adaptive-wrap-prefix-mode)
+# (add-hook 'org-mode-hook 'visual-line-mode)
+# (add-hook 'org-mode-hook 'visual-fill-column-mode)
+# #+end_src
 
 
    
@@ -945,9 +1072,14 @@ S-C-g to search in all buffers
 *** DONE helm-Buffers-list
 M-d added to be able to delete a buffer from the list
 M-s to save the buffer
+Change buffer name length
+https://emacs.stackexchange.com/questions/485/how-to-widen-helm-buffer-names-in-helm-buffers-list
 #+begin_src emacs-lisp
   (define-key helm-map (kbd "M-d") 'helm-buffer-run-kill-persistent)
   (define-key helm-map (kbd "M-s") 'helm-buffer-save-persistent)
+
+  ;; Default is 20 nil = longest buffer name 
+  (setq helm-buffer-max-length nil)
 #+end_src
 ** TODO projectile
 In order to switch easily between projects
@@ -1040,7 +1172,31 @@ PB with the timestamp update
   ;;   ;; sql-mode-mqp ??? To be checked
   ;;   (define-key sql-mode-map (kbd "C-c C-f") 'sqlformat)
 #+end_src
-   
+** page-break-lines
+Needed by dashboard as per documentation of dashboard
+https://github.com/emacs-dashboard/emacs-dashboard
+#+begin_src emacs-lisp
+(require 'page-break-lines)
+#+end_src
+** dashboard
+Associate the dashboard-mode to the **dashboard** buffer
+https://github.com/emacs-dashboard/emacs-dashboard
+#+begin_src emacs-lisp
+  (require 'dashboard)
+  (dashboard-setup-startup-hook)
+
+  ;; Icons to be displayed
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+
+  ;; To select the items displayed
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)
+                          ;;                            (registers . 5)
+                          ))
+#+end_src
 
 
 * Misc
